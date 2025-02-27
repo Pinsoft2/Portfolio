@@ -1,0 +1,35 @@
+{% extends "capstone/layout.html" %}
+{% load static %}
+{% block body %}
+
+    <div class="main">
+        <h1>Upload History</h1>
+
+        {% if not user.is_authenticated %}
+
+        Please <a href="/login">login</a> or <a href="/register">create an account</a> :)
+
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <div class="histories">
+        <h2 class="rainbow rainbow_text_animated"> {{user}} >w< <p style="font-size:80">&#128110;</p></h2>
+        {% for history in histories %}
+            <div class="history">
+            <ul>Document Name: {{history.document}}</ul>
+            <ul>Created Time:{{history.created_time}}</ul>
+            <ul>Word Pairs: {{history.word_pairs}}</ul>
+         </div>
+        {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+
+{% block script %}
+    <script src="{% static 'capstone/index.js' %}" ></script>
+{% endblock %}
+
+{% endblock %}
+
+

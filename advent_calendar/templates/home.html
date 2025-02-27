@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentines My One and Only</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Audiowide&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='home.css') }}" rel="stylesheet">
+</head>
+<body>
+    {% if not authenticated %}
+    <div id="loginOverlay">
+        <div class="login-box">
+            <h2>✨Be my valentine?✨</h2>
+            <div id="errorContainer" style="display: none;">
+                <img src="https://media.tenor.com/kHcmsxlKHEAAAAAM/rock-one-eyebrow-raised-rock-staring.gif"
+                     alt="Suspicious Rock"
+                     class="error-image">
+            </div>
+            <div class="password-form">
+                <input type="password" id="passwordInput" placeholder="Password">
+                <button type="button" onclick="checkPassword()">Enter</button>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="snowfall-left">
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2g1ZTA3ZHB2eWw5ZjQ3Zmhha3pkMzlxa29heXNjeDQyc2UxaXZ2cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/gCxd0kUSR6I9dflWgm/giphy.gif" alt="Snowfall" />
+    </div>
+    <div class="snowfall-right">
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2g1ZTA3ZHB2eWw5ZjQ3Zmhha3pkMzlxa29heXNjeDQyc2UxaXZ2cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/gCxd0kUSR6I9dflWgm/giphy.gif" alt="Snowfall" />
+    </div>
+
+    <div class="container">
+        <div class="toothless-left">
+            <img src="https://i.gifer.com/origin/bb/bbbb2ff22c58d6457e1f082e3880f4dc_w200.gif" alt="Toothless Left" />
+        </div>
+        <div class="toothless-right">
+            <img src="https://i.gifer.com/origin/bb/bbbb2ff22c58d6457e1f082e3880f4dc_w200.gif" alt="Toothless Right" />
+        </div>
+
+        <h1 class="title">To my one and only</h1>
+
+        <div id="calendar" class="calendar-tree">
+            <div class="heart-container">
+                <!-- Heart boxes will be generated here -->
+            </div>
+            <div class="tree-star">⭐
+                <button type="button" class="close-star" onclick="closeStarMessage(event)">×</button>
+                <div class="star-text">
+                    Dear ____:<br><br>
+                    SAY SOMETHING TO YOUR LOVED ONES!<br><br>
+                    With all the love,<br>
+                    Your ____🐹
+                </div>
+            </div>
+        </div>
+
+        <a href="{{ url_for('admin') }}" class="admin-button" title="Admin Settings">
+            <span>⚙️</span>
+        </a>
+    </div>
+    {% endif %}
+
+    {% if authenticated %}
+    <script>
+        const currentConfig = {{ calendar_config|tojson|safe }};
+        console.log('Calendar config:', currentConfig);
+    </script>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

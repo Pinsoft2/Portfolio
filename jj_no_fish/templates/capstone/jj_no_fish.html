@@ -1,0 +1,84 @@
+{% extends "capstone/layout.html" %}
+{% load static %}
+{% block body %}
+
+<div class="main">
+    {% if not user.is_authenticated %}
+    <div class="welcome-card">
+        <h1>Welcome to JJNoFish ✨</h1>
+        <p>Create a more comfortable reading experience by customizing content to your preferences.</p>
+        <div class="auth-links">
+            <a href="/login">Login</a>
+            <a href="/register">Create Account</a>
+        </div>
+    </div>
+{% endif %}
+
+    {% if user.is_authenticated %}
+        <!-- Left Column Container -->
+        <div class="left-column">
+            <form method="post" enctype="multipart/form-data" name="Doc_form" action="{% url 'jj_no_fish' %}">
+                {% csrf_token %}
+
+                <!-- Upload Section -->
+                <div class="card">
+                    <h2 class="rainbow_text_animated">No fish allowed! >w<
+                        <span style="font-size: 1.5rem;">👮</span>
+                    </h2>
+                    <div class="upload-area">
+                        <label class="file-label">
+                            Choose File
+                            <input type="file" name="document" accept=".docx" style="display: none;">
+                        </label>
+                    </div>
+                    <button type="button" id="process-doc" class="submit-button" style="display: none;">
+                        Process Document
+                    </button>
+                </div>
+
+                <!-- Word Replacement Section -->
+                <div class="card">
+                    <h2>Replace Words</h2>
+                    <div id="data_table">
+                        <div class="word-pair">
+                            <input type="text" name="old_word" placeholder="Word to replace" value="{{ old_word }}">
+                            <input type="text" name="new_word" placeholder="New word" value="{{ new_word }}">
+                        </div>
+                    </div>
+                    <button type="button" id="add" class="add-button">+ Add another replacement</button>
+                    <input type="submit" name="action" value="Upload & Replace" class="submit-button">
+                </div>
+
+                {% if upload_completed is True %}
+                    <div class="card" id="success_message">
+                        <p class="success-message">File upload and replace successful!</p>
+                    </div>
+                {% endif %}
+
+                <!-- Export Section -->
+                <div class="card">
+                    <h2>Export Document</h2>
+                    <input type="submit" name="action" value="Export" class="submit-button">
+                </div>
+            </form>
+        </div>
+
+        <!-- Right Column Container -->
+        <div class="right-column">
+            <div class="card">
+                <h2>Document Preview</h2>
+                <div class="preview-area">
+                    <div class="preview-text">
+                        Upload a document to see preview
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% block script %}
+    <script src="{% static 'capstone/index.js' %}"></script>
+{% endblock %}
+
+{% endblock %}

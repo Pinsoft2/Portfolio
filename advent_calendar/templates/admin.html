@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='admin.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Calendar Admin Panel</h1>
+        </div>
+
+        <div class="settings-panel">
+            <h2>🔐 Security Settings</h2>
+            <div class="form-group">
+                <label>🎄 Unlock Password:</label>
+                <input type="text" id="unlockPassword" value="{{ unlock_password }}" placeholder="Enter unlock password">
+            </div>
+            <div class="form-group">
+                <label>⭐ Star Password:</label>
+                <input type="text" id="starPassword" value="{{ star_password }}" placeholder="Enter star password">
+            </div>
+        </div>
+
+        <div id="configGrid" class="heart-layout"></div>
+
+        <div id="notification"></div>
+
+        <div class="control-panel">
+            <button class="save-btn" onclick="saveAll()">Save Changes</button>
+            <button class="preview-btn" onclick="window.open('{{ url_for("home") }}', '_blank')">Preview Calendar</button>
+            <button class="reset-btn" onclick="resetConfiguration()">Reset All</button>
+            <a href="{{ url_for('home') }}" class="back-btn">Back to Calendar</a>
+            <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <!-- Move the script inline to ensure calendar_config is available -->
+    <script>
+        console.log('Script starting');
+        const currentConfig = {{ calendar_config|tojson|safe }};
+        console.log('Current config:', currentConfig);
+
+        function createConfigGrid() {
+            console.log('Creating grid');
+            const grid = document.getElementById('configGrid');
+            console.log('Grid element:', grid);
+            grid.innerHTML = '';
+
+            const heartLayout = [
+                [0, 1, 1, 0, 1, 1, 0],
+                [1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1],
+                [0, 1, 1, 1, 1, 1, 0],
+                [0, 0, 1, 1, 1, 0, 0],
+                [0, 0, 0, 1, 0, 0, 0]
+            ];
+
+            let boxNumber = 1;
+
+            heartLayout.forEach((row, rowIndex) => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'heart-row';
+
+                row.forEach((cell, cellIndex) => {
+                    if (cell === 1 && boxNumber <= 42) {
+                        const box = createConfigBox(boxNumber);
+                        rowDiv.appendChild(box);
+                        boxNumber++;
+                    } else {
+                        const spacer = document.createElement('div');
+                        spacer.className = 'heart-spacer';
+                        spacer.style.width = '150px';
+                        rowDiv.appendChild(spacer);
+                    }
+                });
+
+                grid.appendChild(rowDiv);
+            });
+            console.log('Grid created');
+        }
+
+        function createConfigBox(number) {
+            const box = document.createElement('div');
+            box.className = 'box-config';
+
+            const title = document.createElement('div');
+            title.className = 'title';
+            title.textContent = `Box ${number}`;
+            box.appendChild(title);
+
+            const urlInput = document.createElement('input');
+            urlInput.type = 'text';
+            urlInput.placeholder = 'Enter image URL';
+            urlInput.setAttribute('data-box-number', number);
+            urlInput.value = currentConfig[number]?.image || '';
+            urlInput.onchange = (e) => handleImageUrl(e, number);
+            box.appendChild(urlInput);
+
+            const preview = document.createElement('div');
+            preview.className = 'preview-area';
+            if (currentConfig[number]?.image) {
+                preview.innerHTML = `<img src="${currentConfig[number].image}" alt="Box ${number}">`;
+            } else {
+                preview.textContent = number;
+            }
+            box.appendChild(preview);
+
+            return box;
+        }
+
+        async function handleImageUrl(event, boxNumber) {
+            const imageUrl = event.target.value;
+            const preview = event.target.nextElementSibling;
+
+            try {
+                const formData = new FormData();
+                formData.append('box_number', boxNumber);
+                formData.append('image_url', imageUrl);
+
+                const response = await fetch('{{ url_for("save_box") }}', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    currentConfig[boxNumber] = { image: imageUrl };
+                    preview.innerHTML = '';
+                    if (imageUrl) {
+                        preview.innerHTML = `<img src="${imageUrl}" alt="Box ${boxNumber}">`;
+                    } else {
+                        preview.textContent = boxNumber;
+                    }
+                    showNotification('Image URL saved successfully!');
+                } else {
+                    throw new Error('Save failed');
+                }
+            } catch (error) {
+                preview.textContent = boxNumber;
+                showNotification('Failed to save image URL', true);
+                console.error('Error:', error);
+            }
+        }
+
+        async function saveAll() {
+            const unlockPassword = document.getElementById('unlockPassword').value;
+            const starPassword = document.getElementById('starPassword').value;
+
+            try {
+                const formData = new FormData();
+                formData.append('unlock_password', unlockPassword);
+                formData.append('star_password', starPassword);
+
+                const response = await fetch('{{ url_for("save_settings") }}', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    showNotification('All changes saved successfully!');
+                } else {
+                    throw new Error('Save failed');
+                }
+            } catch (error) {
+                showNotification('Failed to save changes', true);
+                console.error('Save error:', error);
+            }
+        }
+
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.background = isError ? '#dc2626' : '#065f46';
+            notification.style.display = 'block';
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Call createConfigGrid when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded');
+            createConfigGrid();
+        });
+    </script>
+</body>
+</html>

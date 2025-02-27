@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.59/build/spline-viewer.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <div class="container">
+        <spline-viewer loading-anim-type="spinner-big-dark" url="https://prod.spline.design/AmACvPzMhhV2Iu0H/scene.splinecode"></spline-viewer>
+        <!--spline-viewer loading-anim-type="spinner-big-dark" url="https://prod.spline.design/A3pgMfjiN9L7VLvZ/scene.splinecode"></spline-viewer -->
+        <div id="countdown">10</div>
+    </div>
+    <div id="instruction">Click and release to continue</div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

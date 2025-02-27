@@ -1,0 +1,26 @@
+{% extends "capstone/layout.html" %}
+
+{% block body %}
+    <div class="login-container">
+        <h2>Welcome Back! ✨</h2>
+
+        {% if message %}
+            <div class="login-message">{{ message }}</div>
+        {% endif %}
+
+        <form class="login-form" action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input autofocus type="text" name="username" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" placeholder="Password">
+            </div>
+            <input type="submit" value="Login">
+        </form>
+
+        <div class="register-prompt">
+            Don't have an account? <a href="{% url 'register' %}">Register here</a>
+        </div>
+    </div>
+{% endblock %}
