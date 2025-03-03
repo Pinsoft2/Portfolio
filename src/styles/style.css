@@ -6,25 +6,27 @@
 }
 
 body {
-    font-family: 'Tahoma', sans-serif;
-    background: linear-gradient(180deg, #A7C7E7, #F0F0F0);
+    font-family: 'Trebuchet MS', sans-serif;
+    background: linear-gradient(180deg, #8BC6EC, #F0F8FF);
     color: #000;
 }
 
 h1, h2 {
-    font-family: 'Tahoma', sans-serif;
-    color: #003366;
+    font-family: 'Trebuchet MS', sans-serif;
+    color: #0044CC;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Header Styles */
 header {
-    background: linear-gradient(180deg, #003366, #00509E);
+    background: linear-gradient(180deg, #0044CC, #0099FF);
     color: white;
     text-align: center;
     padding: 50px 20px;
     font-size: 1.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 -4px 8px rgba(255, 255, 255, 0.5), 0 4px 10px rgba(0, 0, 0, 0.3);
     border-bottom: 4px solid #FFFFFF;
+    border-radius: 0 0 15px 15px;
 }
 
 header h1 {
@@ -48,12 +50,12 @@ header p {
 }
 
 .project-card {
-    background: #E3E3E3;
-    border: 2px solid #B0B0B0;
-    border-radius: 10px;
+    background: rgba(240, 248, 255, 0.8);
+    border: 3px solid #0066CC;
+    border-radius: 15px;
     width: 30%;
     margin: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.7), 0 5px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s;
     text-align: center;
     padding: 15px;
@@ -68,13 +70,14 @@ header p {
 
 .project-image {
     width: 100%;
-    border-radius: 8px;
-    border: 2px solid #B0B0B0;
+    border-radius: 10px;
+    border: 3px solid #0066CC;
 }
 
 .project-card h2 {
     font-size: 1.5rem;
     padding: 10px;
+    color: #0044CC;
 }
 
 .project-card p {
@@ -84,7 +87,7 @@ header p {
 
 .project-link {
     display: block;
-    background: #00509E;
+    background: #0099FF;
     color: white;
     text-align: center;
     padding: 10px;
@@ -92,10 +95,11 @@ header p {
     font-weight: bold;
     border-radius: 10px;
     transition: 0.3s;
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 .project-link:hover {
-    background: #003366;
+    background: #0044CC;
     transform: scale(1.05);
 }
 
@@ -103,12 +107,13 @@ header p {
 footer {
     text-align: center;
     padding: 20px;
-    background: #003366;
+    background: #0044CC;
     color: white;
     font-size: 1rem;
     margin-top: 40px;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 4px 8px rgba(255, 255, 255, 0.5), 0 -4px 10px rgba(0, 0, 0, 0.3);
     font-weight: bold;
+    border-radius: 15px 15px 0 0;
 }
 
 @keyframes fadeIn {
