@@ -5,36 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pinsoft's Portfolio</title>
     <link rel="stylesheet" href="src/styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Portfolio</h1>
-        <p>Here are some of my web applications that I have built.</p>
-    </header>
+    <div class="container">
+        <header>
+            <div class="logo">PS</div>
+            <h1>Pinsoft</h1>
+            <p>App Developer & Designer</p>
+        </header>
 
-    <section class="projects">
-        <div class="project-card">
-            <img src="src/assets/advent_calendar_screenshot.png" alt="Advent Calendar" class="project-image">
-            <h2>Interactive Valentine's Day Calendar</h2>
-            <p>A heart-shaped grid with interactive boxes containing romantic messages.</p>
-            <a href="https://github.com/Pinsoft2/Portfolio/advent_calendar" class="project-link">View Project</a>
-        </div>
-        <div class="project-card">
-            <img src="src/assets/jj_no_fish_screenshot.png" alt="JJNoFish" class="project-image">
-            <h2>JJNoFish: Personalized Content Filter</h2>
-            <p>Helps users filter content based on personalized triggers and phobias.</p>
-            <a href="https://github.com/Pinsoft2/Portfolio/jj_no_fish" class="project-link">View Project</a>
-        </div>
-        <div class="project-card">
-            <img src="src/assets/1000_hours_screenshot.png" alt="1000 Hours" class="project-image">
-            <h2>1000 Hours Time Tracker</h2>
-            <p>Track time spent on projects to reach a designated 10000-hour goal.</p>
-            <a href="https://github.com/Pinsoft2/Portfolio/1000_hours" class="project-link">View Project</a>
-        </div>
-    </section>
+        <section class="projects">
+            <div class="section-header">
+                <h2>Projects</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="src/assets/advent_calendar_screenshot.png" alt="Valentine's Day Calendar">
+                        <div class="overlay">
+                            <a href="https://github.com/Pinsoft2/Portfolio/advent_calendar" class="view-btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Valentine's Day Calendar</h3>
+                        <p>Interactive heart-shaped grid with romantic messages</p>
+                        <div class="tech-stack">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="src/assets/jj_no_fish_screenshot.png" alt="JJNoFish">
+                        <div class="overlay">
+                            <a href="https://github.com/Pinsoft2/Portfolio/jj_no_fish" class="view-btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>JJNoFish</h3>
+                        <p>Personalized content filter for triggers and phobias</p>
+                        <div class="tech-stack">
+                            <span>React</span>
+                            <span>Node.js</span>
+                            <span>ML</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="src/assets/1000_hours_screenshot.png" alt="1000 Hours">
+                        <div class="overlay">
+                            <a href="https://github.com/Pinsoft2/Portfolio/1000_hours" class="view-btn">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>1000 Hours</h3>
+                        <p>Time tracker for reaching your 10,000-hour mastery goal</p>
+                        <div class="tech-stack">
+                            <span>Vue.js</span>
+                            <span>Firebase</span>
+                            <span>PWA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <footer>
-        <p>© 2025 My Portfolio. All Rights Reserved.</p>
-    </footer>
+        <footer>
+            <div class="social-links">
+                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p>© 2025 Pinsoft. Building the future, one app at a time.</p>
+        </footer>
+    </div>
 </body>
 </html>
