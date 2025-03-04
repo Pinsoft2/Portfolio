@@ -78,7 +78,7 @@
 </div>
 
 {% block script %}
-    <script src="{% static 'capstone/index.js' %}"></script>
+    <script src="{{ url_for('static', filename='capstone/index.js') }}"></script>
 {% endblock %}
 
 {% endblock %}
