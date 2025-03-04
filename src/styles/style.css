@@ -1,14 +1,33 @@
-/* Modern High-Tech Portfolio Design */
+/* Complete Portfolio with Theme Toggle */
+
+/* Base Variables for both themes */
 :root {
-    --primary: #0070f3;
-    --secondary: #00c5c3;
-    --dark: #111827;
-    --light: #f3f4f6;
-    --card: #1f2937;
-    --text: #e5e7eb;
-    --accent: #6366f1;
+    /* Modern Theme Variables */
+    --modern-bg: linear-gradient(180deg, #8BC6EC, #F0F8FF);
+    --modern-primary: #0044CC;
+    --modern-secondary: #0099FF;
+    --modern-text: #000000;
+    --modern-text-light: #FFFFFF;
+    --modern-card-bg: rgba(240, 248, 255, 0.8);
+    --modern-card-border: #0066CC;
+    --modern-button-bg: #0099FF;
+    --modern-button-hover: #0044CC;
+    --modern-shadow: rgba(0, 0, 0, 0.2);
+    
+    /* Retro Theme Variables */
+    --retro-bg: #008080; /* Win95 teal */
+    --retro-window-bg: #c0c0c0;
+    --retro-button-face: #c0c0c0;
+    --retro-button-highlight: #ffffff;
+    --retro-button-shadow: #808080;
+    --retro-button-darkShadow: #000000;
+    --retro-text: #000000;
+    --retro-window-frame: #000000;
+    --retro-window-title: #000080;
+    --retro-window-title-text: #ffffff;
 }
 
+/* Global Styles */
 * {
     margin: 0;
     padding: 0;
@@ -16,303 +35,736 @@
 }
 
 body {
-    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: var(--dark);
-    color: var(--text);
-    line-height: 1.6;
+    font-family: 'Trebuchet MS', sans-serif;
+    color: var(--modern-text);
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
+body.theme-modern {
+    background: var(--modern-bg);
 }
 
+body.theme-retro {
+    background-color: var(--retro-bg);
+    font-family: 'MS Sans Serif', 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Theme Toggle Styles */
+.theme-toggle-container {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 9999;
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 6px 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.theme-switch-checkbox {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+    position: absolute;
+}
+
+.theme-switch-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    width: 50px;
+    height: 24px;
+    background: var(--modern-primary);
+    position: relative;
+    transition: background-color 0.2s;
+    border-radius: 12px;
+}
+
+.theme-switch-label .theme-switch-inner {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+body.theme-retro .theme-switch-label {
+    background: #c0c0c0;
+    border-radius: 0;
+    border: 2px solid #000;
+    border-top-color: #808080;
+    border-left-color: #808080;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+}
+
+.theme-switch-label .theme-switch-switch {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    transition: 0.2s;
+    background: white;
+    border-radius: 50%;
+}
+
+body.theme-retro .theme-switch-label .theme-switch-switch {
+    width: 16px;
+    height: 16px;
+    border-radius: 0;
+    background: #808080;
+    border: 2px solid #000;
+    border-top-color: #fff;
+    border-left-color: #fff;
+    border-right-color: #808080;
+    border-bottom-color: #808080;
+}
+
+.theme-switch-checkbox:checked + .theme-switch-label .theme-switch-switch {
+    left: calc(100% - 22px);
+}
+
+body.theme-retro .theme-switch-checkbox:checked + .theme-switch-label .theme-switch-switch {
+    left: calc(100% - 18px);
+}
+
+.theme-switch-checkbox:checked + .theme-switch-label {
+    background: var(--retro-window-title);
+}
+
+body.theme-retro .theme-switch-checkbox:checked + .theme-switch-label {
+    background: #c0c0c0;
+}
+
+.theme-label {
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 8px;
+    user-select: none;
+}
+
+/* Content Containers for each theme */
+.modern-theme-content,
+.retro-theme-content {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.retro-theme-content {
+    display: none;
+}
+
+/* MODERN THEME STYLES */
 /* Header Styles */
-header {
+.modern-theme-content header {
+    background: linear-gradient(180deg, var(--modern-primary), var(--modern-secondary));
+    color: var(--modern-text-light);
+    text-align: center;
+    padding: 50px 20px;
+    font-size: 1.5rem;
+    box-shadow: inset 0 -4px 8px rgba(255, 255, 255, 0.5), 0 4px 10px rgba(0, 0, 0, 0.3);
+    border-bottom: 4px solid #FFFFFF;
+    border-radius: 0 0 15px 15px;
+}
+
+.modern-theme-content header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.modern-theme-content header p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+/* Projects Section */
+.modern-theme-content .projects {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 30px auto;
+    padding: 20px;
+    max-width: 1100px;
+}
+
+.modern-theme-content .project-card {
+    background: var(--modern-card-bg);
+    border: 3px solid var(--modern-card-border);
+    border-radius: 15px;
+    width: 30%;
+    margin: 20px;
+    box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.7), 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.modern-theme-content .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modern-theme-content .project-image {
+    width: 100%;
+    border-radius: 10px;
+    border: 3px solid var(--modern-card-border);
+}
+
+.modern-theme-content .project-card h2 {
+    font-size: 1.5rem;
+    padding: 10px;
+    color: var(--modern-primary);
+}
+
+.modern-theme-content .project-card p {
+    padding: 10px 15px;
+    font-size: 1rem;
+}
+
+.modern-theme-content .project-link {
+    display: block;
+    background: var(--modern-button-bg);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: 0.3s;
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.modern-theme-content .project-link:hover {
+    background: var(--modern-button-hover);
+    transform: scale(1.05);
+}
+
+/* Footer Styles */
+.modern-theme-content .modern-footer {
+    text-align: center;
+    padding: 20px;
+    background: var(--modern-primary);
+    color: white;
+    font-size: 1rem;
+    margin-top: 40px;
+    box-shadow: inset 0 4px 8px rgba(255, 255, 255, 0.5), 0 -4px 10px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    border-radius: 15px 15px 0 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* RETRO THEME STYLES */
+/* Desktop Styles */
+.retro-theme-content .desktop {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Window Styles */
+.retro-theme-content .window,
+.retro-theme-content .project-window {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    width: 640px;
+    height: 480px;
+    background-color: var(--retro-window-bg);
+    border: 2px solid var(--retro-window-frame);
+    border-top-color: var(--retro-button-highlight);
+    border-left-color: var(--retro-button-highlight);
+    border-right-color: var(--retro-button-darkShadow);
+    border-bottom-color: var(--retro-button-darkShadow);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.retro-theme-content .project-window {
+    width: 500px;
+    height: 400px;
+    z-index: 10;
+}
+
+.retro-theme-content .window-header {
+    height: 18px;
+    background-color: var(--retro-window-title);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2px 0 4px;
+    color: var(--retro-window-title-text);
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.retro-theme-content .window-title {
+    display: flex;
+    align-items: center;
+}
+
+.retro-theme-content .window-controls {
+    display: flex;
+    align-items: center;
+}
+
+.retro-theme-content .control {
+    width: 14px;
+    height: 14px;
+    margin-left: 2px;
+    border: 1px solid var(--retro-button-shadow);
+    border-top-color: var(--retro-button-highlight);
+    border-left-color: var(--retro-button-highlight);
+    border-right-color: var(--retro-button-darkShadow);
+    border-bottom-color: var(--retro-button-darkShadow);
+    background-color: var(--retro-button-face);
+    color: black;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.retro-theme-content .control:active {
+    border-top-color: var(--retro-button-darkShadow);
+    border-left-color: var(--retro-button-darkShadow);
+    border-right-color: var(--retro-button-highlight);
+    border-bottom-color: var(--retro-button-highlight);
+}
+
+/* Window Menu */
+.retro-theme-content .window-menu {
+    height: 19px;
+    background-color: var(--retro-window-bg);
+    border-bottom: 1px solid var(--retro-button-shadow);
+    display: flex;
+    font-size: 11px;
+}
+
+.retro-theme-content .menu-item {
+    padding: 2px 6px;
+    cursor: pointer;
+}
+
+.retro-theme-content .menu-item:hover {
+    background-color: var(--retro-window-title);
+    color: white;
+}
+
+/* Toolbar */
+.retro-theme-content .toolbar {
+    height: 30px;
+    background-color: var(--retro-window-bg);
+    border-bottom: 1px solid var(--retro-button-shadow);
+    display: flex;
+    align-items: center;
+    padding: 2px 5px;
+}
+
+.retro-theme-content .toolbar-btn {
+    height: 24px;
+    margin-right: 5px;
+    padding: 2px 8px;
+    font-size: 11px;
+    background-color: var(--retro-button-face);
+    border: 1px solid var(--retro-button-shadow);
+    border-top-color: var(--retro-button-highlight);
+    border-left-color: var(--retro-button-highlight);
+    border-right-color: var(--retro-button-darkShadow);
+    border-bottom-color: var(--retro-button-darkShadow);
+    cursor: pointer;
+}
+
+.retro-theme-content .toolbar-btn:active {
+    border-top-color: var(--retro-button-darkShadow);
+    border-left-color: var(--retro-button-darkShadow);
+    border-right-color: var(--retro-button-highlight);
+    border-bottom-color: var(--retro-button-highlight);
+}
+
+/* Window Content */
+.retro-theme-content .window-content {
+    flex: 1;
+    background-color: white;
+    border: 1px solid;
+    border-top-color: var(--retro-button-darkShadow);
+    border-left-color: var(--retro-button-darkShadow);
+    border-right-color: var(--retro-button-highlight);
+    border-bottom-color: var(--retro-button-highlight);
+    padding: 2px;
+    overflow: auto;
+}
+
+.retro-theme-content .folder-view {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.retro-theme-content .folder-item {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 60vh;
-    position: relative;
-    overflow: hidden;
+    cursor: pointer;
 }
 
-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 30% 20%, rgba(0, 112, 243, 0.6), transparent 35%),
-        radial-gradient(circle at 70% 60%, rgba(0, 197, 195, 0.4), transparent 35%);
-    z-index: -1;
-}
-
-.logo {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    box-shadow: 0 10px 25px -5px rgba(0, 112, 243, 0.5);
+.retro-theme-content .folder-item:hover {
+    background-color: #000080;
     color: white;
 }
 
-header h1 {
-    font-size: 4rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -1px;
+.retro-theme-content .folder-item:hover .folder-name {
+    color: white;
 }
 
-header p {
-    font-size: 1.25rem;
-    opacity: 0.8;
-    margin-bottom: 1.5rem;
+.retro-theme-content .folder-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 5px;
+    border: 1px solid #000;
+    background-color: #fff;
 }
 
-/* Section Styles */
-.section-header {
+.retro-theme-content .folder-name {
     text-align: center;
-    margin-bottom: 3rem;
+    font-size: 11px;
+    color: black;
 }
 
-.section-header h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--light);
-    display: inline-block;
-    position: relative;
+/* Project Window Styles */
+.retro-theme-content .project-content {
+    padding: 10px;
 }
 
-.divider {
-    width: 60px;
-    height: 4px;
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    margin: 1rem auto;
-    border-radius: 2px;
-}
-
-/* Project Grid */
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-bottom: 5rem;
-}
-
-.project-card {
-    background-color: var(--card);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), 
-                0 0 20px rgba(99, 102, 241, 0.3);
-}
-
-.project-image {
-    position: relative;
-    overflow: hidden;
-    height: 200px;
-}
-
-.project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.project-card:hover .project-image img {
-    transform: scale(1.05);
-}
-
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+.retro-theme-content .project-details {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    flex-direction: column;
 }
 
-.project-card:hover .overlay {
-    opacity: 1;
+.retro-theme-content .project-screenshot {
+    max-width: 100%;
+    max-height: 200px;
+    margin-bottom: 15px;
+    border: 1px solid #000;
 }
 
-.view-btn {
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transform: translateY(20px);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+.retro-theme-content .project-info h3 {
+    margin-bottom: 10px;
+    font-size: 14px;
 }
 
-.project-card:hover .view-btn {
-    transform: translateY(0);
+.retro-theme-content .project-info p {
+    margin-bottom: 10px;
+    font-size: 12px;
 }
 
-.view-btn:hover {
-    box-shadow: 0 8px 25px rgba(0, 112, 243, 0.4);
+.retro-theme-content .project-tech h4 {
+    margin-bottom: 5px;
+    font-size: 12px;
 }
 
-.project-info {
-    padding: 1.5rem;
-}
-
-.project-info h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-}
-
-.project-info p {
-    font-size: 0.95rem;
-    color: #9ca3af;
-    margin-bottom: 1rem;
-}
-
-.tech-stack {
+.retro-theme-content .tech-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 5px;
+    margin-bottom: 15px;
 }
 
-.tech-stack span {
-    background-color: rgba(99, 102, 241, 0.1);
-    color: var(--accent);
-    padding: 0.25rem 0.75rem;
-    border-radius: 50px;
-    font-size: 0.75rem;
-    font-weight: 500;
+.retro-theme-content .tech-tag {
+    background-color: var(--retro-window-bg);
+    border: 1px solid var(--retro-button-shadow);
+    font-size: 11px;
+    padding: 2px 6px;
 }
 
-/* Footer Styles */
-footer {
-    text-align: center;
-    padding: 3rem 0;
-    position: relative;
-}
-
-footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: 1px;
-    background: linear-gradient(to right, 
-        transparent, 
-        rgba(255, 255, 255, 0.1), 
-        transparent);
-}
-
-.social-links {
+.retro-theme-content .project-buttons {
     display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.retro-theme-content .win95-button {
+    padding: 4px 10px;
+    font-size: 11px;
+    background-color: var(--retro-button-face);
+    border: 1px solid var(--retro-button-shadow);
+    border-top-color: var(--retro-button-highlight);
+    border-left-color: var(--retro-button-highlight);
+    border-right-color: var(--retro-button-darkShadow);
+    border-bottom-color: var(--retro-button-darkShadow);
+    cursor: pointer;
+}
+
+.retro-theme-content .win95-button:active {
+    border-top-color: var(--retro-button-darkShadow);
+    border-left-color: var(--retro-button-darkShadow);
+    border-right-color: var(--retro-button-highlight);
+    border-bottom-color: var(--retro-button-highlight);
+    padding-top: 5px;
+    padding-left: 11px;
+    padding-bottom: 3px;
+    padding-right: 9px;
+}
+
+/* Status Bar */
+.retro-theme-content .status-bar {
+    height: 20px;
+    background-color: var(--retro-window-bg);
+    border-top: 1px solid var(--retro-button-highlight);
+    display: flex;
+    font-size: 11px;
+    padding: 2px 5px;
+}
+
+.retro-theme-content .status-item {
+    margin-right: 15px;
+}
+
+/* Taskbar */
+.retro-theme-content .taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 28px;
+    background-color: var(--retro-window-bg);
+    border-top: 1px solid var(--retro-button-highlight);
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    z-index: 9999;
+}
+
+.retro-theme-content .start-button {
+    height: 22px;
+    padding: 1px 5px;
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: bold;
+    background-color: var(--retro-button-face);
+    border: 1px solid var(--retro-button-shadow);
+    border-top-color: var(--retro-button-highlight);
+    border-left-color: var(--retro-button-highlight);
+    border-right-color: var(--retro-button-darkShadow);
+    border-bottom-color: var(--retro-button-darkShadow);
+    cursor: pointer;
+}
+
+.retro-theme-content .start-button:active {
+    border-top-color: var(--retro-button-darkShadow);
+    border-left-color: var(--retro-button-darkShadow);
+    border-right-color: var(--retro-button-highlight);
+    border-bottom-color: var(--retro-button-highlight);
+}
+
+.retro-theme-content .start-logo {
+    width: 16px;
+    height: 16px;
+    margin-right: 3px;
+    background-color: var(--retro-bg);
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    font-weight: bold;
+    font-size: 10px;
+    color: white;
 }
 
-.social-links a {
-    color: var(--text);
-    font-size: 1.5rem;
-    transition: color 0.3s ease, transform 0.3s ease;
+.retro-theme-content .taskbar-items {
+    flex: 1;
+    display: flex;
+    margin: 0 5px;
 }
 
-.social-links a:hover {
-    color: var(--primary);
-    transform: translateY(-3px);
+.retro-theme-content .taskbar-item {
+    min-width: 160px;
+    height: 22px;
+    padding: 3px 7px;
+    margin-right: 3px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    background-color: var(--retro-button-face);
+    border: 1px solid var(--retro-button-shadow);
+    border-top-color: var(--retro-button-highlight);
+    border-left-color: var(--retro-button-highlight);
+    border-right-color: var(--retro-button-darkShadow);
+    border-bottom-color: var(--retro-button-darkShadow);
 }
 
-footer p {
-    color: #9ca3af;
-    font-size: 0.875rem;
+.retro-theme-content .taskbar-item.active {
+    border-top-color: var(--retro-button-darkShadow);
+    border-left-color: var(--retro-button-darkShadow);
+    border-right-color: var(--retro-button-highlight);
+    border-bottom-color: var(--retro-button-highlight);
 }
 
-/* Animations */
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.retro-theme-content .taskbar-tray {
+    display: flex;
+    align-items: center;
 }
 
-.project-card {
-    animation: fadeUp 0.6s ease forwards;
-    opacity: 0;
+.retro-theme-content .tray-time {
+    min-width: 55px;
+    height: 22px;
+    padding: 3px 5px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--retro-window-bg);
+    border: 1px solid var(--retro-button-shadow);
+    border-top-color: var(--retro-button-darkShadow);
+    border-left-color: var(--retro-button-darkShadow);
+    border-right-color: var(--retro-button-highlight);
+    border-bottom-color: var(--retro-button-highlight);
 }
 
-.project-card:nth-child(1) {
-    animation-delay: 0.2s;
+/* Windows XP Theme Adjustments */
+body.theme-xp .retro-theme-content {
+    --retro-bg: #236B0E; /* XP Bliss green background */
+    --retro-window-bg: #ECE9D8;
+    --retro-window-title: #0055EA;
+    --retro-window-title-text: #FFFFFF;
 }
 
-.project-card:nth-child(2) {
-    animation-delay: 0.4s;
+body.theme-xp .retro-theme-content .desktop {
+    background-image: url('https://wallpapercave.com/wp/wp2754979.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
-.project-card:nth-child(3) {
-    animation-delay: 0.6s;
+body.theme-xp .retro-theme-content .window,
+body.theme-xp .retro-theme-content .project-window {
+    border-radius: 8px 8px 0 0;
+    border-width: 1px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    header {
-        height: 50vh;
+body.theme-xp .retro-theme-content .window-header {
+    height: 30px;
+    background: linear-gradient(to bottom, #3C8DD9 0%, #2169D5 14%, #0054E4 51%, #0359EC 76%, #0461F4 100%);
+}
+
+body.theme-xp .retro-theme-content .control {
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+}
+
+body.theme-xp .retro-theme-content .close {
+    background: linear-gradient(to bottom, #F5A3A3 0%, #F24949 100%);
+    color: white;
+}
+
+body.theme-xp .retro-theme-content .toolbar-btn,
+body.theme-xp .retro-theme-content .win95-button {
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #F5F9FE 0%, #D0DDED 50%, #CADBF3 100%);
+}
+
+body.theme-xp .retro-theme-content .taskbar-item {
+    border-radius: 3px;
+}
+
+body.theme-xp .retro-theme-content .taskbar {
+    background: linear-gradient(to bottom, #3C8DD9 0%, #2169D5 14%, #0054E4 51%, #0359EC 76%, #0461F4 100%);
+    border: none;
+}
+
+body.theme-xp .retro-theme-content .start-button {
+    background: linear-gradient(to bottom, #3C8FDB 0%, #2166D1 30%, #0053E0 100%);
+    color: white;
+    border-radius: 3px;
+}
+
+body.theme-xp .retro-theme-content .start-logo {
+    background: linear-gradient(to bottom, #7EBB48 0%, #2D912F 100%);
+    border-radius: 3px;
+}
+
+body.theme-xp .retro-theme-content .tray-time {
+    background: none;
+    border: none;
+    color: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 900px) {
+    .modern-theme-content .project-card {
+        width: 45%;
     }
     
-    header h1 {
-        font-size: 3rem;
-    }
-    
-    .project-grid {
-        grid-template-columns: 1fr;
+    .retro-theme-content .window,
+    .retro-theme-content .project-window {
+        width: 90%;
+        height: 80%;
     }
 }
 
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 2.5rem;
+@media (max-width: 600px) {
+    .modern-theme-content .project-card {
+        width: 100%;
     }
     
-    .logo {
-        width: 60px;
-        height: 60px;
-        font-size: 1.5rem;
+    .retro-theme-content .folder-item {
+        width: 80px;
     }
     
-    .section-header h2 {
-        font-size: 2rem;
+    .theme-toggle-container {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .theme-toggle {
+        padding: 4px 8px;
+    }
+    
+    .theme-switch-label {
+        width: 40px;
+        height: 20px;
+    }
+    
+    .theme-switch-label .theme-switch-switch {
+        width: 16px;
+        height: 16px;
+    }
+    
+    body.theme-retro .theme-switch-label .theme-switch-switch {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .theme-switch-checkbox:checked + .theme-switch-label .theme-switch-switch {
+        left: calc(100% - 18px);
+    }
+    
+    body.theme-retro .theme-switch-checkbox:checked + .theme-switch-label .theme-switch-switch {
+        left: calc(100% - 16px);
     }
 }

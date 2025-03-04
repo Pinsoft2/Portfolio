@@ -4,88 +4,354 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pinsoft's Portfolio</title>
-    <link rel="stylesheet" href="src/styles/style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
-<body>
-    <div class="container">
+<body class="theme-modern">
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle-container">
+        <div class="theme-toggle">
+            <input type="checkbox" id="theme-switch" class="theme-switch-checkbox">
+            <label for="theme-switch" class="theme-switch-label">
+                <span class="theme-switch-inner"></span>
+                <span class="theme-switch-switch"></span>
+            </label>
+            <div class="theme-label">Modern</div>
+        </div>
+    </div>
+
+    <!-- Modern Theme Content -->
+    <div class="modern-theme-content">
         <header>
-            <div class="logo">PS</div>
-            <h1>Pinsoft</h1>
-            <p>App Developer & Designer</p>
+            <h1>Welcome to Pinsoft's Portfolio</h1>
+            <p>Here are some of my web applications that I have built.</p>
         </header>
 
         <section class="projects">
-            <div class="section-header">
-                <h2>Projects</h2>
-                <div class="divider"></div>
+            <div class="project-card">
+                <img src="src/assets/advent_calendar_screenshot.png" alt="Valentine's Day Calendar" class="project-image">
+                <h2>Interactive Valentine's Day Calendar</h2>
+                <p>A heart-shaped grid with interactive boxes containing romantic messages.</p>
+                <a href="https://github.com/Pinsoft2/Portfolio/advent_calendar" class="project-link">View Project</a>
             </div>
             
-            <div class="project-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="src/assets/advent_calendar_screenshot.png" alt="Valentine's Day Calendar">
-                        <div class="overlay">
-                            <a href="https://github.com/Pinsoft2/Portfolio/advent_calendar" class="view-btn">View Project</a>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Valentine's Day Calendar</h3>
-                        <p>Interactive heart-shaped grid with romantic messages</p>
-                        <div class="tech-stack">
-                            <span>HTML</span>
-                            <span>CSS</span>
-                            <span>JavaScript</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="src/assets/jj_no_fish_screenshot.png" alt="JJNoFish">
-                        <div class="overlay">
-                            <a href="https://github.com/Pinsoft2/Portfolio/jj_no_fish" class="view-btn">View Project</a>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>JJNoFish</h3>
-                        <p>Personalized content filter for triggers and phobias</p>
-                        <div class="tech-stack">
-                            <span>React</span>
-                            <span>Node.js</span>
-                            <span>ML</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="src/assets/1000_hours_screenshot.png" alt="1000 Hours">
-                        <div class="overlay">
-                            <a href="https://github.com/Pinsoft2/Portfolio/1000_hours" class="view-btn">View Project</a>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>1000 Hours</h3>
-                        <p>Time tracker for reaching your 10,000-hour mastery goal</p>
-                        <div class="tech-stack">
-                            <span>Vue.js</span>
-                            <span>Firebase</span>
-                            <span>PWA</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="project-card">
+                <img src="src/assets/jj_no_fish_screenshot.png" alt="JJNoFish" class="project-image">
+                <h2>JJNoFish: Personalized Content Filter</h2>
+                <p>Helps users filter content based on personalized triggers and phobias.</p>
+                <a href="https://github.com/Pinsoft2/Portfolio/jj_no_fish" class="project-link">View Project</a>
+            </div>
+            
+            <div class="project-card">
+                <img src="src/assets/1000_hours_screenshot.png" alt="1000 Hours" class="project-image">
+                <h2>1000 Hours Time Tracker</h2>
+                <p>Track time spent on projects to reach a designated 10000-hour goal.</p>
+                <a href="https://github.com/Pinsoft2/Portfolio/1000_hours" class="project-link">View Project</a>
             </div>
         </section>
 
-        <footer>
-            <div class="social-links">
-                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            </div>
-            <p>© 2025 Pinsoft. Building the future, one app at a time.</p>
+        <footer class="modern-footer">
+            <p>© 2025 Pinsoft Portfolio. All Rights Reserved.</p>
         </footer>
     </div>
+
+    <!-- Retro Windows Theme Content -->
+    <div class="retro-theme-content">
+        <div class="desktop">
+            <!-- Main Window -->
+            <div class="window">
+                <div class="window-header">
+                    <div class="window-title">Pinsoft's Portfolio</div>
+                    <div class="window-controls">
+                        <button class="control minimize">_</button>
+                        <button class="control maximize">□</button>
+                        <button class="control close">×</button>
+                    </div>
+                </div>
+                
+                <div class="window-menu">
+                    <div class="menu-item">File</div>
+                    <div class="menu-item">Edit</div>
+                    <div class="menu-item">View</div>
+                    <div class="menu-item">Help</div>
+                </div>
+                
+                <div class="toolbar">
+                    <button class="toolbar-btn">Back</button>
+                    <button class="toolbar-btn">Forward</button>
+                    <button class="toolbar-btn">Cut</button>
+                    <button class="toolbar-btn">Copy</button>
+                    <button class="toolbar-btn">Paste</button>
+                </div>
+                
+                <div class="window-content">
+                    <div class="folder-view">
+                        <div class="folder-item" data-project="0">
+                            <img src="src/assets/advent_calendar_screenshot.png" alt="Valentine's Calendar" class="folder-icon">
+                            <div class="folder-name">Valentine's Calendar</div>
+                        </div>
+                        
+                        <div class="folder-item" data-project="1">
+                            <img src="src/assets/jj_no_fish_screenshot.png" alt="JJNoFish" class="folder-icon">
+                            <div class="folder-name">JJNoFish</div>
+                        </div>
+                        
+                        <div class="folder-item" data-project="2">
+                            <img src="src/assets/1000_hours_screenshot.png" alt="1000 Hours" class="folder-icon">
+                            <div class="folder-name">1000 Hours</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="status-bar">
+                    <div class="status-item">3 object(s)</div>
+                    <div class="status-item">11.5MB free, 540MB total</div>
+                </div>
+            </div>
+
+            <!-- Project Window (hidden initially) -->
+            <div class="project-window" style="display: none;">
+                <div class="window-header">
+                    <div class="window-title">Project Details</div>
+                    <div class="window-controls">
+                        <button class="control minimize">_</button>
+                        <button class="control maximize">□</button>
+                        <button class="control close">×</button>
+                    </div>
+                </div>
+                
+                <div class="window-menu">
+                    <div class="menu-item">File</div>
+                    <div class="menu-item">Edit</div>
+                    <div class="menu-item">View</div>
+                    <div class="menu-item">Help</div>
+                </div>
+                
+                <div class="window-content project-content">
+                    <div class="project-details">
+                        <img id="project-image" src="" alt="Project Screenshot" class="project-screenshot">
+                        <div class="project-info">
+                            <h3 id="project-title">Project Title</h3>
+                            <p id="project-description">Project description goes here.</p>
+                            <div class="project-tech">
+                                <h4>Technologies:</h4>
+                                <div id="project-tech-tags" class="tech-tags"></div>
+                            </div>
+                            <div class="project-buttons">
+                                <button class="win95-button" id="view-code-btn">View Code</button>
+                                <button class="win95-button" id="live-demo-btn">Live Demo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="status-bar">
+                    <div class="status-item">Project details</div>
+                </div>
+            </div>
+
+            <!-- Taskbar -->
+            <div class="taskbar">
+                <button class="start-button">
+                    <div class="start-logo">P</div>
+                    Start
+                </button>
+                <div class="taskbar-items">
+                    <div class="taskbar-item active">Pinsoft's Portfolio</div>
+                </div>
+                <div class="taskbar-tray">
+                    <div class="tray-time">4:20 PM</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Define project data
+            const projectData = [
+                {
+                    name: "Valentine's Day Calendar",
+                    description: "An interactive heart-shaped grid with romantic messages for Valentine's Day. Each cell reveals a different romantic message or memory when clicked.",
+                    tech: ["HTML", "CSS", "JavaScript"],
+                    image: "src/assets/advent_calendar_screenshot.png",
+                    codeUrl: "https://github.com/Pinsoft2/Portfolio/advent_calendar",
+                    demoUrl: "https://github.com/Pinsoft2/Portfolio/advent_calendar"
+                },
+                {
+                    name: "JJNoFish",
+                    description: "A personalized content filter that helps users avoid triggering content based on their specific phobias and sensitivities.",
+                    tech: ["React", "Node.js", "Machine Learning"],
+                    image: "src/assets/jj_no_fish_screenshot.png",
+                    codeUrl: "https://github.com/Pinsoft2/Portfolio/jj_no_fish",
+                    demoUrl: "https://github.com/Pinsoft2/Portfolio/jj_no_fish"
+                },
+                {
+                    name: "1000 Hours",
+                    description: "A time tracking application that helps users monitor their progress towards the 10,000-hour mastery goal in various skills and activities.",
+                    tech: ["Vue.js", "Firebase", "PWA"],
+                    image: "src/assets/1000_hours_screenshot.png",
+                    codeUrl: "https://github.com/Pinsoft2/Portfolio/1000_hours",
+                    demoUrl: "https://github.com/Pinsoft2/Portfolio/1000_hours"
+                }
+            ];
+            
+            // Theme toggle functionality
+            const themeSwitch = document.getElementById('theme-switch');
+            const themeLabel = document.querySelector('.theme-label');
+            const modernContent = document.querySelector('.modern-theme-content');
+            const retroContent = document.querySelector('.retro-theme-content');
+            
+            // Check if there's a saved preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.className = savedTheme;
+                if (savedTheme === 'theme-retro') {
+                    themeSwitch.checked = true;
+                    themeLabel.textContent = 'Retro';
+                    modernContent.style.display = 'none';
+                    retroContent.style.display = 'block';
+                }
+            } else {
+                // Default is modern theme
+                retroContent.style.display = 'none';
+            }
+            
+            // Theme switch event listener
+            themeSwitch.addEventListener('change', function() {
+                if (this.checked) {
+                    document.body.className = 'theme-retro';
+                    localStorage.setItem('theme', 'theme-retro');
+                    themeLabel.textContent = 'Retro';
+                    modernContent.style.display = 'none';
+                    retroContent.style.display = 'block';
+                } else {
+                    document.body.className = 'theme-modern';
+                    localStorage.setItem('theme', 'theme-modern');
+                    themeLabel.textContent = 'Modern';
+                    modernContent.style.display = 'block';
+                    retroContent.style.display = 'none';
+                }
+            });
+            
+            // Retro theme functionality
+            if (retroContent) {
+                // Update clock
+                function updateClock() {
+                    const now = new Date();
+                    let hours = now.getHours();
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12; // Convert 0 to 12
+                    document.querySelector('.tray-time').textContent = hours + ':' + minutes + ' ' + ampm;
+                }
+                
+                // Initial clock update and set interval
+                updateClock();
+                setInterval(updateClock, 60000); // Update every minute
+                
+                // Window controls functionality
+                const closeButtons = document.querySelectorAll('.control.close');
+                
+                closeButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const window = this.closest('.project-window');
+                        if (window) {
+                            window.style.display = 'none';
+                        }
+                    });
+                });
+                
+                // Folder items click to open project details
+                const folderItems = document.querySelectorAll('.folder-item');
+                const projectWindow = document.querySelector('.project-window');
+                const projectTitle = document.getElementById('project-title');
+                const projectDescription = document.getElementById('project-description');
+                const projectImage = document.getElementById('project-image');
+                const projectTechTags = document.getElementById('project-tech-tags');
+                const viewCodeBtn = document.getElementById('view-code-btn');
+                const liveDemoBtn = document.getElementById('live-demo-btn');
+                
+                folderItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        const projectIndex = this.getAttribute('data-project');
+                        const projectInfo = projectData[projectIndex];
+                        
+                        projectTitle.textContent = projectInfo.name;
+                        projectDescription.textContent = projectInfo.description;
+                        projectImage.src = projectInfo.image;
+                        
+                        // Update tech tags
+                        projectTechTags.innerHTML = '';
+                        projectInfo.tech.forEach(tech => {
+                            const tag = document.createElement('span');
+                            tag.className = 'tech-tag';
+                            tag.textContent = tech;
+                            projectTechTags.appendChild(tag);
+                        });
+                        
+                        // Set button URLs
+                        viewCodeBtn.onclick = function() { window.open(projectInfo.codeUrl, '_blank'); };
+                        liveDemoBtn.onclick = function() { window.open(projectInfo.demoUrl, '_blank'); };
+                        
+                        projectWindow.style.display = 'flex';
+                    });
+                });
+                
+                // Make windows draggable
+                const windows = document.querySelectorAll('.window, .project-window');
+                
+                windows.forEach(window => {
+                    const header = window.querySelector('.window-header');
+                    
+                    let isDragging = false;
+                    let offsetX, offsetY;
+                    
+                    header.addEventListener('mousedown', startDrag);
+                    
+                    function startDrag(e) {
+                        isDragging = true;
+                        const rect = window.getBoundingClientRect();
+                        offsetX = e.clientX - rect.left;
+                        offsetY = e.clientY - rect.top;
+                        
+                        // Bring window to front
+                        windows.forEach(w => {
+                            w.style.zIndex = 1;
+                        });
+                        window.style.zIndex = 10;
+                        
+                        document.addEventListener('mousemove', drag);
+                        document.addEventListener('mouseup', stopDrag);
+                    }
+                    
+                    function drag(e) {
+                        if (!isDragging) return;
+                        
+                        const x = e.clientX - offsetX;
+                        const y = e.clientY - offsetY;
+                        
+                        // Keep window within viewport
+                        const maxX = document.body.clientWidth - window.offsetWidth;
+                        const maxY = document.body.clientHeight - window.offsetHeight - 30; // Account for taskbar
+                        
+                        const boundedX = Math.max(0, Math.min(x, maxX));
+                        const boundedY = Math.max(0, Math.min(y, maxY));
+                        
+                        window.style.left = boundedX + 'px';
+                        window.style.top = boundedY + 'px';
+                        window.style.transform = 'none'; // Remove the initial transform
+                    }
+                    
+                    function stopDrag() {
+                        isDragging = false;
+                        document.removeEventListener('mousemove', drag);
+                        document.removeEventListener('mouseup', stopDrag);
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
