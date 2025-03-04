@@ -170,31 +170,31 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Define project data
             const projectData = [
-                {
-                    name: "Valentine's Day Calendar",
-                    description: "An interactive heart-shaped grid with romantic messages for Valentine's Day. Each cell reveals a different romantic message or memory when clicked.",
-                    tech: ["HTML", "CSS", "JavaScript"],
-                    image: "src/assets/advent_calendar_screenshot.png",
-                    codeUrl: "https://github.com/Pinsoft2/Portfolio/advent_calendar",
-                    demoUrl: "https://github.com/Pinsoft2/Portfolio/advent_calendar"
-                },
-                {
-                    name: "JJNoFish",
-                    description: "A personalized content filter that helps users avoid triggering content based on their specific phobias and sensitivities.",
-                    tech: ["React", "Node.js", "Machine Learning"],
-                    image: "src/assets/jj_no_fish_screenshot.png",
-                    codeUrl: "https://github.com/Pinsoft2/Portfolio/jj_no_fish",
-                    demoUrl: "https://github.com/Pinsoft2/Portfolio/jj_no_fish"
-                },
-                {
-                    name: "1000 Hours",
-                    description: "A time tracking application that helps users monitor their progress towards the 10,000-hour mastery goal in various skills and activities.",
-                    tech: ["Vue.js", "Firebase", "PWA"],
-                    image: "src/assets/1000_hours_screenshot.png",
-                    codeUrl: "https://github.com/Pinsoft2/Portfolio/1000_hours",
-                    demoUrl: "https://github.com/Pinsoft2/Portfolio/1000_hours"
-                }
-            ];
+            {
+                name: "Valentine's Day Calendar",
+                description: "An interactive heart-shaped grid with romantic messages for Valentine's Day. Each cell reveals a different romantic message or memory when clicked.",
+                tech: ["HTML", "CSS", "JavaScript"],
+                image: "src/assets/advent_calendar_screenshot.png",
+                codeUrl: "https://github.com/Pinsoft2/Portfolio/advent_calendar", // This can stay as GitHub link
+                demoUrl: "advent_calendar/templates/index.html" // Update to local path
+            },
+            {
+                name: "JJNoFish",
+                description: "A personalized content filter that helps users avoid triggering content based on their specific phobias and sensitivities.",
+                tech: ["React", "Node.js", "Machine Learning"],
+                image: "src/assets/jj_no_fish_screenshot.png",
+                codeUrl: "https://github.com/Pinsoft2/Portfolio/jj_no_fish", // This can stay as GitHub link
+                demoUrl: "jj_no_fish/templates/capstone/jj_no_fish.html" // Update to local path
+            },
+            {
+                name: "1000 Hours",
+                description: "A time tracking application that helps users monitor their progress towards the 10,000-hour mastery goal in various skills and activities.",
+                tech: ["Vue.js", "Firebase", "PWA"],
+                image: "src/assets/1000_hours_screenshot.png",
+                codeUrl: "https://github.com/Pinsoft2/Portfolio/1000_hours", // This can stay as GitHub link
+                demoUrl: "10000hours/templates/index.html" // Update to local path
+            }
+        ];
             
             // Theme toggle functionality
             const themeSwitch = document.getElementById('theme-switch');
