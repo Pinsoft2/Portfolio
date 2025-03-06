@@ -55,7 +55,9 @@ ROOT_URLCONF = "capstone.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["/workspaces/43708898/capstone/templates"],
+        "DIRS": [
+            os.path.join(BASE_DIR, 'templates'),  # ✅ Ensure this is included
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -118,7 +120,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "capstone", "static"),
+    os.path.join(BASE_DIR, 'static'),  # Ensure this is correct
 ]
 
 # Default primary key field type
