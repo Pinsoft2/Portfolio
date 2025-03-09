@@ -1,0 +1,1 @@
+web: gunicorn jj_no_fish.wsgi --log-file -
