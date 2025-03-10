@@ -123,7 +123,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_URL = '/jj-no-fish/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'capstone', 'static'),
 ]
@@ -138,3 +138,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = 'capstone.User'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+
+##cloudflare stuff
+# Add these settings if you're behind a reverse proxy
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# If you need to serve from a subfolder
+if not DEBUG:
+    FORCE_SCRIPT_NAME = '/jj-no-fish'
