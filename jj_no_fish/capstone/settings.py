@@ -22,8 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-kp(do$=*hi1q#gn5o7rdj44unnt$$6u56xtfp^n#k3b-5t%q-o"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Set DEBUG to False for production
+DEBUG = False  # Change this to False for production
+
+# Or use environment variable to control it
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False') != 'False'
 
 ALLOWED_HOSTS = [
     'port-jj-no-fish-4d351c2056ab.herokuapp.com',
