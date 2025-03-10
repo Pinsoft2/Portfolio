@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'port-jj-no-fish-4d351c2056ab.herokuapp.com',
+    'pinsoft.pro',
     'localhost',
     '127.0.0.1',
 ]
@@ -123,7 +124,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+if not DEBUG:
+    STATIC_URL = '/jj-no-fish/static/'
+else:
+    STATIC_URL = '/static/'
+    
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'capstone', 'static'),
 ]
