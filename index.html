@@ -184,7 +184,7 @@
                 tech: ["React", "Node.js", "Machine Learning"],
                 image: "src/assets/jj_no_fish_screenshot.png",
                 codeUrl: "https://github.com/Pinsoft2/Portfolio/jj_no_fish", // This can stay as GitHub link
-                demoUrl: "jj_no_fish/templates/capstone/jj_no_fish.html" // Update to local path
+                demoUrl: "https://pinsoft.pro/jj-no-fish" // Update to local path
             },
             {
                 name: "1000 Hours",
@@ -202,7 +202,8 @@
             const modernContent = document.querySelector('.modern-theme-content');
             const retroContent = document.querySelector('.retro-theme-content');
             
-            // Check if there's a saved preference
+
+           // Check if there's a saved preference
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
                 document.body.className = savedTheme;
@@ -211,12 +212,21 @@
                     themeLabel.textContent = 'Retro';
                     modernContent.style.display = 'none';
                     retroContent.style.display = 'block';
+                } else {
+                    // Modern theme is saved
+                    modernContent.style.display = 'block';
+                    retroContent.style.display = 'none';
                 }
             } else {
-                // Default is modern theme
-                retroContent.style.display = 'none';
+                // Default to retro theme if no preference
+                document.body.className = 'theme-retro';
+                themeSwitch.checked = true;
+                themeLabel.textContent = 'Retro';
+                modernContent.style.display = 'none';
+                retroContent.style.display = 'block';
+                localStorage.setItem('theme', 'theme-retro');
             }
-            
+                        
             // Theme switch event listener
             themeSwitch.addEventListener('change', function() {
                 if (this.checked) {
