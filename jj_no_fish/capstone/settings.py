@@ -156,3 +156,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # If you need to serve from a subfolder
 if not DEBUG:
     FORCE_SCRIPT_NAME = '/jj-no-fish'
+    # Make sure these are included
+    USE_X_FORWARDED_HOST = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
