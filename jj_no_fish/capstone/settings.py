@@ -59,6 +59,13 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://pinsoft.pro',
+]
+
+
+
 ROOT_URLCONF = "capstone.urls"
 
 TEMPLATES = [
