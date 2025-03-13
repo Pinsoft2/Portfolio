@@ -35,6 +35,14 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
 ]
 
+# Configure session cookies
+SESSION_COOKIE_SECURE = True  # For HTTPS
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'  # 'Strict' can cause issues with redirects
+
+# Cookie domain - your actual domain
+SESSION_COOKIE_DOMAIN = 'pinsoft.pro'  # This is important for cross-subdomain auth
+
 
 # Application definition
 
