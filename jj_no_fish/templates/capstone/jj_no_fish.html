@@ -13,11 +13,11 @@
         </div>
     </div>
     {% endif %}
-    {% if debug_message %}
+    {% comment %} {% if debug_message %}
     <div style="background-color: yellow; padding: 10px; margin: 10px;">
         <strong>Debug Message:</strong> {{ debug_message }}
     </div>
-    {% endif %}
+    {% endif %} {% endcomment %}
 
     {% if user.is_authenticated %}
         <!-- Left Column Container -->
