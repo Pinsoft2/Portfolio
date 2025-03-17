@@ -35,5 +35,7 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("history/<int:user_id>/", views.history, name="history"),
+    # Your existing paths
+    path('debug/', views.debug_view, name='debug'),
     # path("error", views.error, name = "error")
 ]

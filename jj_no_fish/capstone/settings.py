@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-kp(do$=*hi1q#gn5o7rdj44unnt$$6u56xtfp^n#k3b-5t%q-o"
 
 # Set DEBUG to False for production
-DEBUG = False  # Change this to False for production
+DEBUG = True  # Change this to False for production
 
 # Or use environment variable to control it
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') != 'False'

@@ -107,3 +107,7 @@ def history(request, user_id):
     histories = UploadedDocument.objects.filter(user=profile_user)
     histories =  histories.order_by("-created_time").all()
     return render(request, 'capstone/history.html', {"histories": histories})
+
+
+def debug_view(request):
+    return HttpResponse("Debug view is working!")
