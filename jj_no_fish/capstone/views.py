@@ -63,42 +63,49 @@ def register(request):
         return render(request, "capstone/register.html")
 
 def jj_no_fish(request):
+    try:
+        if request.method == 'POST':
+            action = request.POST.get('action')
 
-    if request.method == 'POST':
-        action = request.POST.get('action')
+            if action == 'Upload & Replace' and 'document' in request.FILES:
+                old_words = request.POST.getlist('old_word')
+                new_words = request.POST.getlist('new_word')
+                word_pairs = dict(zip(old_words, new_words))
+                user = request.user
 
-        if action == 'Upload & Replace' and 'document' in request.FILES:
-            old_words = request.POST.getlist('old_word')
-            new_words = request.POST.getlist('new_word')
-            word_pairs = dict(zip(old_words, new_words))
-            user = request.user
+                # Process document
+                context = main(action, request, word_pairs, user)
 
-            # Process document
-            context = main(action, request, word_pairs, user)
+                # Check if it's an AJAX request
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return JsonResponse({
+                        'original_preview': context.get('original_preview', ''),
+                        'modified_preview': context.get('modified_preview', ''),
+                        'upload_completed': True
+                    })
 
-            # Check if it's an AJAX request
-            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                return JsonResponse({
-                    'original_preview': context.get('original_preview', ''),
-                    'modified_preview': context.get('modified_preview', ''),
-                    'upload_completed': True
-                })
+                return render(request, 'capstone/jj_no_fish.html', context)
 
-            return render(request, 'capstone/jj_no_fish.html', context)
+            elif action == 'Export':
+                context = main(action, request)
+                modified_doc = context.get('modified_doc')
+                new_file_name = context.get('new_file_name')
+                response = HttpResponse(
+                    modified_doc,
+                    content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                )
+                response['Content-Disposition'] = f'attachment; filename="{new_file_name}"'
+                return response
 
-        elif action == 'Export':
-            context = main(action, request)
-            modified_doc = context.get('modified_doc')
-            new_file_name = context.get('new_file_name')
-            response = HttpResponse(
-                modified_doc,
-                content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-            )
-            response['Content-Disposition'] = f'attachment; filename="{new_file_name}"'
-            return response
-
-    context = main('jj_no_fish', request)
-    return render(request, 'capstone/jj_no_fish.html', context)
+        # For GET requests, bypass the main() call for debugging
+        # context = main('jj_no_fish', request)  # This line is likely causing the error
+        context = {'debug_message': 'Main function call bypassed for debugging'}
+        return render(request, 'capstone/jj_no_fish.html', context)
+    
+    except Exception as e:
+        import traceback
+        error_details = traceback.format_exc()
+        return HttpResponse(f"<h1>Error in view:</h1><p>{str(e)}</p><pre>{error_details}</pre>")
 
 def history(request, user_id):
 
