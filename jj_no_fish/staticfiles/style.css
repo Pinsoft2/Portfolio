@@ -411,6 +411,10 @@ input[type="submit"]:hover {
     }
 }
 
+.reg-form{
+    max-width: 400px;
+}
+
 /* Login Page Container */
 .login-container {
     max-width: 400px;
