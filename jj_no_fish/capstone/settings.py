@@ -39,7 +39,8 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'  # 'Strict' can cause issues with redirects
 
 # Cookie domain - your actual domain
-SESSION_COOKIE_DOMAIN = 'pinsoft.pro'  # This is important for cross-subdomain auth
+SESSION_COOKIE_DOMAIN = None
+# 'pinsoft.pro'  # This is important for cross-subdomain auth
 
 
 # Application definition

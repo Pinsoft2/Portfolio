@@ -22,7 +22,9 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("jj_no_fish"))
+            redirect_url = reverse("jj_no_fish")
+            print(f"Redirecting to: {redirect_url}")
+            return HttpResponseRedirect(redirect_url)
         else:
             return render(request, "capstone/login.html", {
                 "message": "Invalid username and/or password."
@@ -101,6 +103,7 @@ def jj_no_fish(request):
         # context = main('jj_no_fish', request)  # This line is likely causing the error
         # context = {'debug_message': 'Main function call bypassed for debugging'}
         context = main('jj_no_fish', request)
+        context['user'] = request.user
         return render(request, 'capstone/jj_no_fish.html', context)
     
     except Exception as e:
