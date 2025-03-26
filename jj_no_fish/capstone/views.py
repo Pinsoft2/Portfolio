@@ -99,7 +99,8 @@ def jj_no_fish(request):
 
         # For GET requests, bypass the main() call for debugging
         # context = main('jj_no_fish', request)  # This line is likely causing the error
-        context = {'debug_message': 'Main function call bypassed for debugging'}
+        # context = {'debug_message': 'Main function call bypassed for debugging'}
+        context = main('jj_no_fish', request)
         return render(request, 'capstone/jj_no_fish.html', context)
     
     except Exception as e:
