@@ -1,41 +1,25 @@
-"""
-URL configuration for capstone project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-# from django.contrib import admin
-# from django.urls import path, include
-
-# urlpatterns = [
-#     path('admin/', admin.site.urls),
-#     path('', include('capstone.urls')),
-# ]
-
-
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from . import views
 
-
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", views.jj_no_fish, name = "jj_no_fish"),
+# Base URL patterns without prefix
+base_patterns = [
+    path("", views.jj_no_fish, name="jj_no_fish"),
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("history/<int:user_id>/", views.history, name="history"),
-    # Your existing paths
-    path('debug/', views.debug_view, name='debug'),
-    # path("error", views.error, name = "error")
+    path("debug/", views.debug_view, name="debug"),
+]
+
+# Main URL patterns - combine base patterns with prefixed patterns
+urlpatterns = base_patterns + [
+    path("admin/", admin.site.urls),
+    # Add prefixed versions of all routes
+    path("jj-no-fish/", views.jj_no_fish, name="jj_no_fish_prefixed"),
+    path("jj-no-fish/login", views.login_view, name="login_prefixed"),
+    path("jj-no-fish/logout", views.logout_view, name="logout_prefixed"),
+    path("jj-no-fish/register", views.register, name="register_prefixed"),
+    path("jj-no-fish/history/<int:user_id>/", views.history, name="history_prefixed"),
+    path("jj-no-fish/debug/", views.debug_view, name="debug_prefixed"),
 ]
