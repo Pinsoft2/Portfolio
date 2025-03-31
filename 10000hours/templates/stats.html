@@ -1,0 +1,98 @@
+
+
+<!-- stats.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-center mb-4">1⃣0⃣,0⃣0⃣0⃣ HOURS</h1>
+<p class="lead text-center mb-5">→ Your Statistics ←</p>
+
+<!-- Overview Stats -->
+<div class="card cyber-border mb-4">
+    <div class="card-header">
+        <h4>Overview</h4>
+    </div>
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-4 text-center">
+                <h2 class="total-hours">{{ "%.1f"|format(total_hours) }}</h2>
+                <p>Total Hours</p>
+            </div>
+            <div class="col-md-8">
+                <div class="progress mb-3">
+                    <div class="progress-bar" role="progressbar"
+                         style="width: {{ (total_hours / 10000 * 100)|round(1) }}%"
+                         aria-valuenow="{{ total_hours }}"
+                         aria-valuemin="0"
+                         aria-valuemax="10000">
+                        {{ (total_hours / 10000 * 100)|round(1) }}%
+                    </div>
+                </div>
+                <p class="text-center">Progress to 10,000 Hours</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Category Breakdown -->
+<div class="card cyber-border mb-4">
+    <div class="card-header">
+        <h4>Category Breakdown</h4>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Hours</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category, hours in category_hours.items() %}
+                <tr>
+                    <td>{{ category }}</td>
+                    <td>{{ "%.1f"|format(hours) }}</td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar"
+                                 style="width: {{ (hours / total_hours * 100)|round(1) }}%"
+                                 aria-valuenow="{{ (hours / total_hours * 100)|round(1) }}"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100">
+                                {{ (hours / total_hours * 100)|round(1) }}%
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="card cyber-border">
+    <div class="card-header">
+        <h4>Recent Activity</h4>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Hours</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for date, hours in daily_hours.items()|sort(reverse=true) %}
+                <tr>
+                    <td>{{ date }}</td>
+                    <td>{{ "%.1f"|format(hours) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
