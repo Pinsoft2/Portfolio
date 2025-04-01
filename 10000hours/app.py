@@ -12,6 +12,27 @@ db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
+# Detect environment (local vs. Heroku)
+IS_PRODUCTION = os.getenv("FLASK_ENV") == "production"
+
+# Use the correct subpath for deployment
+SUBPATH = "/time-tracker" if IS_PRODUCTION else ""
+
+app = Flask(__name__, static_url_path=f'{SUBPATH}/static')
+
+# Ensure all routes use the correct subpath
+@app.before_request
+def ensure_subpath():
+    if IS_PRODUCTION and not request.path.startswith(SUBPATH):
+        return redirect(f"{SUBPATH}{request.path}")
+
+@app.route(f"{SUBPATH}/")
+def home():
+    return "Time Tracker is live!"
+
+
+
+
 # Models
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -377,8 +398,12 @@ def inject_today():
     return {'today': datetime.now().strftime('%Y-%m-%d')}
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    # Detect if running in production
+    IS_PRODUCTION = os.getenv("FLASK_ENV") == "production"
+
     # Get port from environment variable or default to 5000
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get("PORT", 5000))
+
     # Bind to 0.0.0.0 to listen on all interfaces
-    app.run(host='0.0.0.0', port=port, debug=False)
+    app.run(host="0.0.0.0", port=port, debug=not IS_PRODUCTION)
