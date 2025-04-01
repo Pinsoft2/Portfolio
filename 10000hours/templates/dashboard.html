@@ -1,156 +1,184 @@
-
-<!-- dashboard.html -->
 {% extends "base.html" %}
 
 {% block content %}
 <h1 class="text-center mb-4">1⃣0⃣,0⃣0⃣0⃣ HOURS</h1>
 <p class="lead text-center mb-5">→ Track your journey to mastery ←</p>
 
-<!-- Progress Section -->
-<div class="card cyber-border mb-4">
-    <div class="card-header">
-        <h4>Progress Tracker</h4>
-    </div>
-    <div class="card-body">
-        <div class="row align-items-center">
-            <div class="col-md-3">
-                <span class="total-hours">
-                    {{ "%.1f"|format(total_hours) }} / 10,000
-                </span>
+<div class="main-container">
+    <!-- Crystal Vase on the right -->
+    <div class="bottle-sidebar">
+        <div id="bottle-container">
+            <div class="stars-collected">
+                <span>{{ ((total_hours / 10000 * 100) / 5)|int }} / 20 Stars</span>
             </div>
-            <div class="col-md-9">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar"
-                         style="width: {{ (total_hours / 10000 * 100)|round(1) }}%"
-                         aria-valuenow="{{ total_hours }}"
-                         aria-valuemin="0"
-                         aria-valuemax="10000">
-                        {{ (total_hours / 10000 * 100)|round(1) }}%
+            <div class="vase">
+                <div class="vase-lip"></div>
+                <div class="vase-body {% if (total_hours / 10000 * 100) >= 100 %}complete{% endif %}">
+                    <div class="vase-reflection"></div>
+                    {% set percent_height = (total_hours / 10000 * 100)|round(1) %}
+                    {% if percent_height > 100 %}
+                        {% set percent_height = 100 %}
+                    {% endif %}
+                    <div class="vase-content" style="height: {{ percent_height }}%;">
+                        <div class="star-container">
+                            {% set num_stars = ((total_hours / 10000 * 100) / 5)|int %}
+                            {% if num_stars > 20 %}
+                                {% set num_stars = 20 %}
+                            {% endif %}
+                            {% for i in range(num_stars) %}
+                                <div class="star">★</div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Clock In/Out Section -->
-<div class="card cyber-border mb-4">
-    <div class="card-header">
-        <h4>Clock In/Out</h4>
-    </div>
-    <div class="card-body">
-        <form id="timerForm">
-            <div class="mb-3">
-                <label for="timer-category" class="form-label">Category</label>
-                <select class="form-select" id="timer-category" name="category_id" required>
-                    {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
-                    {% endfor %}
-                </select>
+    <!-- Main content shifted to the left -->
+    <div class="content-main">
+        <!-- Progress Tracker -->
+        <div class="card cyber-border mb-4">
+            <div class="card-header">
+                <h4>Progress Tracker</h4>
             </div>
-            <div class="mb-3">
-                <label for="timer-description" class="form-label">Description</label>
-                <textarea class="form-control" id="timer-description" name="description" rows="2"></textarea>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <span class="total-hours">
+                            {{ "%.1f"|format(total_hours) }} / 10,000
+                        </span>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar"
+                                 style="width: {{ (total_hours / 10000 * 100)|round(1) }}%"
+                                 aria-valuenow="{{ total_hours }}"
+                                 aria-valuemin="0"
+                                 aria-valuemax="10000">
+                                {{ (total_hours / 10000 * 100)|round(1) }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button type="button" id="toggleTimer" class="btn btn-primary">Start Timer</button>
-        </form>
-    </div>
-</div>
+        </div>
 
-<!-- Manual Entry Section -->
-<div class="card cyber-border mb-4">
-    <div class="card-header">
-        <h4>Manual Entry</h4>
-    </div>
-    <div class="card-body">
-        <form action="{{ url_for('manual_entry') }}" method="POST">
-            <div class="mb-3">
-                <label for="manual-date" class="form-label">Date</label>
-                <input type="date" class="form-control" id="manual-date" name="date" required>
+        <!-- Clock In/Out Section -->
+        <div class="card cyber-border mb-4">
+            <div class="card-header">
+                <h4>Clock In/Out</h4>
             </div>
-            <div class="mb-3">
-                <label for="manual-category" class="form-label">Category</label>
-                <select class="form-select" id="manual-category" name="category_id" required>
-                    {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
-                    {% endfor %}
-                </select>
+            <div class="card-body">
+                <form id="timerForm">
+                    <div class="mb-3">
+                        <label for="timer-category" class="form-label">Category</label>
+                        <select class="form-select" id="timer-category" name="category_id" required>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="timer-description" class="form-label">Description</label>
+                        <textarea class="form-control" id="timer-description" name="description" rows="2"></textarea>
+                    </div>
+                    <button type="button" id="toggleTimer" class="btn btn-primary">Start Timer</button>
+                </form>
             </div>
-            <div class="mb-3">
-                <label for="manual-hours" class="form-label">Hours</label>
-                <input type="number" class="form-control" id="manual-hours" name="hours" step="0.25" min="0.25" required>
-            </div>
-            <div class="mb-3">
-                <label for="manual-description" class="form-label">Description</label>
-                <textarea class="form-control" id="manual-description" name="description" rows="2"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Add Entry</button>
-        </form>
-    </div>
-</div>
+        </div>
 
-<!-- Add Category Section -->
-<div class="card cyber-border mb-4">
-    <div class="card-header">
-        <h4>Add Category</h4>
-    </div>
-    <div class="card-body">
-        <form action="{{ url_for('manage_categories') }}" method="POST">
-            <div class="mb-3">
-                <label for="category-name" class="form-label">Category Name</label>
-                <input type="text" class="form-control" id="category-name" name="name" required>
+        <!-- Manual Entry Section -->
+        <div class="card cyber-border mb-4">
+            <div class="card-header">
+                <h4>Manual Entry</h4>
             </div>
-            <button type="submit" class="btn btn-success">Add Category</button>
-        </form>
-    </div>
-</div>
+            <div class="card-body">
+                <form action="{{ url_for('manual_entry') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="manual-date" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="manual-date" name="date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="manual-category" class="form-label">Category</label>
+                        <select class="form-select" id="manual-category" name="category_id" required>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="manual-hours" class="form-label">Hours</label>
+                        <input type="number" class="form-control" id="manual-hours" name="hours" step="0.25" min="0.25" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="manual-description" class="form-label">Description</label>
+                        <textarea class="form-control" id="manual-description" name="description" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Entry</button>
+                </form>
+            </div>
+        </div>
 
-<!-- Time Entries Table -->
-<div class="card cyber-border">
-    <div class="card-header">
-        <h4>Time Entries</h4>
-    </div>
-    <div class="card-body">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Category</th>
-                    <th>Description</th>
-                    <th>Hours</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for entry in entries %}
-                <tr>
-                    <td>{{ entry.date.strftime('%Y-%m-%d') }}</td>
-                    <td>{{ entry.category.name }}</td>
-                    <td>{{ entry.description }}</td>
-                    <td>
-                        {% if entry.manual_hours %}
-                            {{ entry.manual_hours }}
-                        {% elif entry.clock_in and entry.clock_out %}
-                            {{ ((entry.clock_out - entry.clock_in).total_seconds() / 3600)|round(2) }}
-                        {% elif entry.clock_in %}
-                            In progress...
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if entry.clock_in and not entry.clock_out %}
-                        <form action="{{ url_for('stop_timer', entry_id=entry.id) }}" method="POST" class="d-inline">
-                            <button type="submit" class="btn btn-sm btn-danger">Stop</button>
-                        </form>
-                        {% else %}
-                        <form action="{{ url_for('delete_entry', entry_id=entry.id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
-                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                        </form>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <!-- Time Entries Table -->
+        <div class="card cyber-border">
+            <div class="card-header">
+                <h4>Time Entries</h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Hours</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in entries %}
+                        <tr>
+                            <td>{{ entry.date.strftime('%Y-%m-%d') }}</td>
+                            <td>{{ entry.category.name }}</td>
+                            <td>{{ entry.description }}</td>
+                            <td>
+                                {% if entry.manual_hours %}
+                                    {{ entry.manual_hours }}
+                                {% elif entry.clock_in and entry.clock_out %}
+                                    {{ ((entry.clock_out - entry.clock_in).total_seconds() / 3600)|round(2) }}
+                                {% elif entry.clock_in %}
+                                    In progress...
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if entry.clock_in and not entry.clock_out %}
+                                <form action="{{ url_for('stop_timer', entry_id=entry.id) }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger">Stop</button>
+                                </form>
+                                {% else %}
+                                <form action="{{ url_for('delete_entry', entry_id=entry.id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set today's date as default for manual entry
+        if (document.getElementById('manual-date')) {
+            document.getElementById('manual-date').valueAsDate = new Date();
+        }
+    });
+</script>
 {% endblock %}
