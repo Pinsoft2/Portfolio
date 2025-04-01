@@ -1,44 +1,96 @@
 // Complete fixed JavaScript for star animation
 
 $(document).ready(function() {
-    // Get the raw value of total_hours directly from the span
-    const totalHoursText = $('.total-hours').text().trim();
-    const totalHours = parseFloat(totalHoursText.split('/')[0].trim());
+    // Theme toggle functionality
+    setupThemeToggle();
     
-    console.log('Total hours text:', totalHoursText);
-    console.log('Extracted total hours:', totalHours);
+    // Star animation functionality
+    setupStarAnimation();
     
-    // Calculate stars (1 star per 500 hours)
-    const starsCount = Math.floor(totalHours / 500);
+    function setupThemeToggle() {
+        console.log("Setting up theme toggle...");
+        console.log("Toggle button exists:", $('#theme-toggle').length > 0);
+        
+        // Check if user has a theme preference stored
+        const currentTheme = localStorage.getItem('theme') || 'cyber';
+        console.log("Current theme from localStorage:", currentTheme);
+        
+        setTheme(currentTheme);
+        
+        // Theme toggle event handler with debugging
+        $('#theme-toggle').on('click', function() {
+            console.log("Theme toggle clicked!");
+            const currentTheme = $('body').hasClass('theme-cyber') ? 'cyber' : 'retro';
+            console.log("Current theme detected:", currentTheme);
+            
+            const newTheme = currentTheme === 'cyber' ? 'retro' : 'cyber';
+            console.log("Switching to:", newTheme);
+            
+            setTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        // Also add a direct click handler on body as a test
+        $('body').on('click', '#theme-toggle', function() {
+            console.log("Body delegate detected theme toggle click!");
+        });
+    }
     
-    // Make sure we don't exceed 20 stars
-    const maxStars = Math.min(starsCount, 20);
-    
-    console.log('Stars earned:', maxStars);
-    
-    // Clear any existing stars
-    $('.star-container').empty();
-    
-    // Update the stars counter text
-    $('.stars-collected span').text(maxStars + ' / 20 Stars');
-    
-    // Need to ensure star container and vase have proper positioning and style
-    ensureProperStarContainerSetup();
-    
-    // Add stars with proper falling animation
-    if (maxStars > 0) {
-        for (let i = 0; i < maxStars; i++) {
-            // Delay each star slightly for better visual effect
-            setTimeout(function() {
-                addFallingStarWithoutOverlap(i, maxStars);
-            }, i * 500);
+    function setTheme(theme) {
+        if (theme === 'cyber') {
+            $('body').removeClass('theme-retro').addClass('theme-cyber');
+            $('#theme-toggle-icon').removeClass('fa-microchip').addClass('fa-computer');
+            $('#theme-toggle-text').text('Switch to Retro');
+        } else {
+            $('body').removeClass('theme-cyber').addClass('theme-retro');
+            $('#theme-toggle-icon').removeClass('fa-computer').addClass('fa-microchip');
+            $('#theme-toggle-text').text('Switch to Cyber');
         }
     }
     
-    // Check if vase is complete (100%)
-    if (totalHours >= 10000) {
-        $('.vase-body').addClass('complete');
-        celebrateCompletion();
+    function setupStarAnimation() {
+        // Only run star animation if we're on a page with the progress tracker
+        if ($('.total-hours').length === 0) return;
+        
+        // Get the raw value of total_hours directly from the span
+        const totalHoursText = $('.total-hours').text().trim();
+        const totalHours = parseFloat(totalHoursText.split('/')[0].trim());
+        
+        console.log('Total hours text:', totalHoursText);
+        console.log('Extracted total hours:', totalHours);
+        
+        // Calculate stars (1 star per 500 hours)
+        const starsCount = Math.floor(totalHours / 500);
+        
+        // Make sure we don't exceed 20 stars
+        const maxStars = Math.min(starsCount, 20);
+        
+        console.log('Stars earned:', maxStars);
+        
+        // Clear any existing stars
+        $('.star-container').empty();
+        
+        // Update the stars counter text
+        $('.stars-collected span').text(maxStars + ' / 20 Stars');
+        
+        // Need to ensure star container and vase have proper positioning and style
+        ensureProperStarContainerSetup();
+        
+        // Add stars with proper falling animation
+        if (maxStars > 0) {
+            for (let i = 0; i < maxStars; i++) {
+                // Delay each star slightly for better visual effect
+                setTimeout(function() {
+                    addFallingStarWithoutOverlap(i, maxStars);
+                }, i * 500);
+            }
+        }
+        
+        // Check if vase is complete (100%)
+        if (totalHours >= 10000) {
+            $('.vase-body').addClass('complete');
+            celebrateCompletion();
+        }
     }
     
     function ensureProperStarContainerSetup() {
