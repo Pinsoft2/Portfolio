@@ -1,6 +1,7 @@
 // Complete fixed JavaScript for star animation
 
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded - initializing app");
     // Theme toggle functionality
     setupThemeToggle();
     
@@ -10,12 +11,12 @@ $(document).ready(function() {
     // Improved theme toggle function for both local and proxied environments
     function setupThemeToggle() {
         console.log("Setting up theme toggle...");
+        console.log("Toggle button exists:", $('#theme-toggle').length > 0);
         
         // Check if user has a theme preference stored
         const currentTheme = localStorage.getItem('theme') || 'cyber';
         console.log("Current theme from localStorage:", currentTheme);
         
-        // Apply theme immediately
         setTheme(currentTheme);
         
         // Try both direct binding and event delegation
