@@ -7,7 +7,7 @@ $(document).ready(function() {
     // Star animation functionality
     setupStarAnimation();
     
-        // More robust theme toggle function
+    // Improved theme toggle function for both local and proxied environments
     function setupThemeToggle() {
         console.log("Setting up theme toggle...");
         
@@ -15,11 +15,17 @@ $(document).ready(function() {
         const currentTheme = localStorage.getItem('theme') || 'cyber';
         console.log("Current theme from localStorage:", currentTheme);
         
+        // Apply theme immediately
         setTheme(currentTheme);
         
-        // Use event delegation for better compatibility with dynamically loaded content
-        $(document).on('click', '#theme-toggle', function() {
+        // Try both direct binding and event delegation
+        $('#theme-toggle').on('click', handleThemeToggle);
+        $(document).on('click', '#theme-toggle', handleThemeToggle);
+        
+        function handleThemeToggle(e) {
+            e.preventDefault(); // Prevent default behavior
             console.log("Theme toggle clicked!");
+            
             const currentTheme = $('body').hasClass('theme-cyber') ? 'cyber' : 'retro';
             console.log("Current theme detected:", currentTheme);
             
@@ -28,7 +34,9 @@ $(document).ready(function() {
             
             setTheme(newTheme);
             localStorage.setItem('theme', newTheme);
-        });
+            
+            return false; // Extra measure to prevent event bubbling
+        }
     }
         
     function setTheme(theme) {
