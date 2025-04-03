@@ -50,18 +50,24 @@ body {
 }
 
 /* Theme toggle button (common styles) */
+/* Update the theme toggle button position */
 .theme-toggle {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    /* Remove the fixed positioning */
+    position: relative;
+    top: auto;
+    right: auto;
+    z-index: auto;
+    margin-left: 15px; /* Add some spacing from the brand */
+    padding: 4px 10px; /* Adjust padding to match navbar items */
 }
+
+/* Additional navbar layout adjustments */
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
 /* ========================= */
 /* === CYBERPUNK THEME ===== */
@@ -525,7 +531,7 @@ body.theme-retro {
     background-color: #ECE9D8; /* Windows XP default background */
     color: #000000;
     font-family: 'Tahoma', 'Arial', sans-serif;
-    background-image: url('https://i.imgur.com/rFhpZTt.jpg'); /* Classic Windows XP bliss wallpaper */
+    background-image: url('../img/xp.jpg');
     background-size: cover;
     background-attachment: fixed;
 }
@@ -994,6 +1000,16 @@ body.theme-retro::-webkit-scrollbar-button {
     body.theme-retro .star {
         font-size: 3rem;
     }
+
+    .theme-toggle {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    
+    .theme-toggle-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1009,9 +1025,20 @@ body.theme-retro::-webkit-scrollbar-button {
     
     body.theme-cyber .navbar-brand,
     body.theme-retro .navbar-brand {
+        margin-right: 0; /* Remove default margin */
+        padding-right: 0;
         font-size: 0.7rem;
     }
     
+    .navbar-nav.ms-auto {
+        margin-left: auto !important; /* Ensure the right-side nav hugs the right edge */
+    }
+
+    .theme-toggle-container {
+        display: flex;
+        align-items: center;
+    }
+
     body.theme-cyber .total-hours,
     body.theme-retro .total-hours {
         font-size: 1.2rem;
