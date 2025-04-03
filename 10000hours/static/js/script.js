@@ -7,9 +7,9 @@ $(document).ready(function() {
     // Star animation functionality
     setupStarAnimation();
     
+        // More robust theme toggle function
     function setupThemeToggle() {
         console.log("Setting up theme toggle...");
-        console.log("Toggle button exists:", $('#theme-toggle').length > 0);
         
         // Check if user has a theme preference stored
         const currentTheme = localStorage.getItem('theme') || 'cyber';
@@ -17,8 +17,8 @@ $(document).ready(function() {
         
         setTheme(currentTheme);
         
-        // Theme toggle event handler with debugging
-        $('#theme-toggle').on('click', function() {
+        // Use event delegation for better compatibility with dynamically loaded content
+        $(document).on('click', '#theme-toggle', function() {
             console.log("Theme toggle clicked!");
             const currentTheme = $('body').hasClass('theme-cyber') ? 'cyber' : 'retro';
             console.log("Current theme detected:", currentTheme);
@@ -29,13 +29,8 @@ $(document).ready(function() {
             setTheme(newTheme);
             localStorage.setItem('theme', newTheme);
         });
-        
-        // Also add a direct click handler on body as a test
-        $('body').on('click', '#theme-toggle', function() {
-            console.log("Body delegate detected theme toggle click!");
-        });
     }
-    
+        
     function setTheme(theme) {
         if (theme === 'cyber') {
             $('body').removeClass('theme-retro').addClass('theme-cyber');
