@@ -11,7 +11,7 @@ IS_PRODUCTION = os.getenv("FLASK_ENV") == "production"
 # Use the correct subpath for deployment
 SUBPATH = "/10000hours" if IS_PRODUCTION else ""
 
-app = Flask(__name__, static_url_path=f'{SUBPATH}/static')
+app = Flask(__name__, static_url_path='/static')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///10000hours.db'
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-change-in-production')
 db = SQLAlchemy(app)
