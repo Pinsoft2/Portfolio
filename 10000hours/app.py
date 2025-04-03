@@ -5,33 +5,18 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import os
 
-app = Flask(__name__)
+# Detect environment (local vs. Heroku)
+IS_PRODUCTION = os.getenv("FLASK_ENV") == "production"
+
+# Use the correct subpath for deployment
+SUBPATH = "/10000hours" if IS_PRODUCTION else ""
+
+app = Flask(__name__, static_url_path=f'{SUBPATH}/static')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///10000hours.db'
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-change-in-production')
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-
-# Detect environment (local vs. Heroku)
-IS_PRODUCTION = os.getenv("FLASK_ENV") == "production"
-
-# Use the correct subpath for deployment
-SUBPATH = "/time-tracker" if IS_PRODUCTION else ""
-
-app = Flask(__name__, static_url_path=f'{SUBPATH}/static')
-
-# Ensure all routes use the correct subpath
-@app.before_request
-def ensure_subpath():
-    if IS_PRODUCTION and not request.path.startswith(SUBPATH):
-        return redirect(f"{SUBPATH}{request.path}")
-
-@app.route(f"{SUBPATH}/")
-def home():
-    return "Time Tracker is live!"
-
-
-
 
 # Models
 class User(UserMixin, db.Model):
@@ -74,10 +59,19 @@ with app.app_context():
     # db.drop_all() 
     db.create_all()
 
+# Add prefix to all URLs if in production
+def url_for_with_subpath(*args, **kwargs):
+    if IS_PRODUCTION:
+        return SUBPATH + url_for(*args, **kwargs)
+    return url_for(*args, **kwargs)
+
+# Make the custom url_for available in templates
+app.jinja_env.globals['url_for_with_subpath'] = url_for_with_subpath
+
 @app.route('/')
 def home():
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for_with_subpath('dashboard'))
     return render_template('home.html')
 
 @app.route('/dashboard')
@@ -103,7 +97,7 @@ def dashboard():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for_with_subpath('dashboard'))
     
     if request.method == 'POST':
         username = request.form.get('username')
@@ -114,19 +108,19 @@ def register():
         # Validation
         if not username or not email or not password:
             flash('All fields are required.')
-            return redirect(url_for('register'))
+            return redirect(url_for_with_subpath('register'))
         
         if password != confirm_password:
             flash('Passwords do not match.')
-            return redirect(url_for('register'))
+            return redirect(url_for_with_subpath('register'))
         
         if User.query.filter_by(username=username).first():
             flash('Username already exists.')
-            return redirect(url_for('register'))
+            return redirect(url_for_with_subpath('register'))
         
         if User.query.filter_by(email=email).first():
             flash('Email already registered.')
-            return redirect(url_for('register'))
+            return redirect(url_for_with_subpath('register'))
         
         # Create new user
         new_user = User(username=username, email=email)
@@ -141,14 +135,14 @@ def register():
         db.session.commit()
         
         flash('Registration successful! Please log in.')
-        return redirect(url_for('login'))
+        return redirect(url_for_with_subpath('login'))
     
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for_with_subpath('dashboard'))
     
     if request.method == 'POST':
         username = request.form.get('username')
@@ -159,13 +153,13 @@ def login():
         
         if not user or not user.check_password(password):
             flash('Invalid username or password')
-            return redirect(url_for('login'))
+            return redirect(url_for_with_subpath('login'))
         
         login_user(user, remember=remember)
         next_page = request.args.get('next')
         
         if not next_page or not next_page.startswith('/'):
-            next_page = url_for('dashboard')
+            next_page = url_for_with_subpath('dashboard')
             
         return redirect(next_page)
     
@@ -175,7 +169,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for_with_subpath('home'))
 
 @app.route('/start_timer', methods=['POST'])
 @login_required
@@ -206,11 +200,11 @@ def stop_timer(entry_id):
     # Verify entry belongs to user
     if entry.user_id != current_user.id:
         flash('Unauthorized')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for_with_subpath('dashboard'))
     
     entry.clock_out = datetime.now()
     db.session.commit()
-    return redirect(url_for('dashboard'))
+    return redirect(url_for_with_subpath('dashboard'))
 
 @app.route('/manual_entry', methods=['POST'])
 @login_required
@@ -224,7 +218,7 @@ def manual_entry():
     category = Category.query.get_or_404(category_id)
     if category.user_id != current_user.id:
         flash('Unauthorized')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for_with_subpath('dashboard'))
 
     entry = TimeEntry(
         category_id=category_id,
@@ -235,7 +229,7 @@ def manual_entry():
     )
     db.session.add(entry)
     db.session.commit()
-    return redirect(url_for('dashboard'))
+    return redirect(url_for_with_subpath('dashboard'))
 
 @app.route('/categories', methods=['GET', 'POST'])
 @login_required
@@ -258,17 +252,17 @@ def delete_category(category_id):
     # Verify category belongs to user
     if category.user_id != current_user.id:
         flash('Unauthorized')
-        return redirect(url_for('manage_categories'))
+        return redirect(url_for_with_subpath('manage_categories'))
     
     # Check if category has entries
     if TimeEntry.query.filter_by(category_id=category_id).first():
         flash('Cannot delete category with existing entries')
-        return redirect(url_for('manage_categories'))
+        return redirect(url_for_with_subpath('manage_categories'))
     
     db.session.delete(category)
     db.session.commit()
     flash('Category deleted')
-    return redirect(url_for('manage_categories'))
+    return redirect(url_for_with_subpath('manage_categories'))
 
 @app.route('/delete_entry/<int:entry_id>', methods=['POST'])
 @login_required
@@ -278,12 +272,12 @@ def delete_entry(entry_id):
     # Verify entry belongs to user
     if entry.user_id != current_user.id:
         flash('Unauthorized')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for_with_subpath('dashboard'))
     
     db.session.delete(entry)
     db.session.commit()
     flash('Entry deleted')
-    return redirect(url_for('dashboard'))
+    return redirect(url_for_with_subpath('dashboard'))
 
 @app.route('/profile')
 @login_required
@@ -303,30 +297,30 @@ def update_profile():
     if username and username != current_user.username:
         if User.query.filter_by(username=username).first():
             flash('Username already exists')
-            return redirect(url_for('profile'))
+            return redirect(url_for_with_subpath('profile'))
         current_user.username = username
     
     if email and email != current_user.email:
         if User.query.filter_by(email=email).first():
             flash('Email already registered')
-            return redirect(url_for('profile'))
+            return redirect(url_for_with_subpath('profile'))
         current_user.email = email
     
     # Password change
     if current_password and new_password:
         if not current_user.check_password(current_password):
             flash('Current password is incorrect')
-            return redirect(url_for('profile'))
+            return redirect(url_for_with_subpath('profile'))
         
         if new_password != confirm_password:
             flash('New passwords do not match')
-            return redirect(url_for('profile'))
+            return redirect(url_for_with_subpath('profile'))
         
         current_user.set_password(new_password)
     
     db.session.commit()
     flash('Profile updated successfully')
-    return redirect(url_for('profile'))
+    return redirect(url_for_with_subpath('profile'))
 
 @app.route('/stats')
 @login_required
@@ -369,9 +363,6 @@ def stats():
                           category_hours=category_hours,
                           daily_hours=daily_hours)
 
-
-# Add these routes to your Flask app file
-
 @app.route('/check_active_timer')
 @login_required
 def check_active_timer():
@@ -397,11 +388,13 @@ def inject_today():
     """Add today's date to all templates"""
     return {'today': datetime.now().strftime('%Y-%m-%d')}
 
+# Add context processor for the subpath
+@app.context_processor
+def inject_subpath():
+    """Add subpath to all templates"""
+    return {'subpath': SUBPATH}
 
 if __name__ == "__main__":
-    # Detect if running in production
-    IS_PRODUCTION = os.getenv("FLASK_ENV") == "production"
-
     # Get port from environment variable or default to 5000
     port = int(os.environ.get("PORT", 5000))
 

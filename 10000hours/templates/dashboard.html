@@ -94,7 +94,7 @@
                 <h4>Manual Entry</h4>
             </div>
             <div class="card-body">
-                <form action="{{ url_for('manual_entry') }}" method="POST">
+                <form action="{{ url_for_with_subpath('manual_entry') }}" method="POST">
                     <div class="mb-3">
                         <label for="manual-date" class="form-label">Date</label>
                         <input type="date" class="form-control" id="manual-date" name="date" required>
@@ -153,11 +153,11 @@
                             </td>
                             <td>
                                 {% if entry.clock_in and not entry.clock_out %}
-                                <form action="{{ url_for('stop_timer', entry_id=entry.id) }}" method="POST" class="d-inline">
+                                <form action="{{ url_for_with_subpath('stop_timer', entry_id=entry.id) }}" method="POST" class="d-inline">
                                     <button type="submit" class="btn btn-sm btn-danger">Stop</button>
                                 </form>
                                 {% else %}
-                                <form action="{{ url_for('delete_entry', entry_id=entry.id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                <form action="{{ url_for_with_subpath('delete_entry', entry_id=entry.id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
                                     <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                                 </form>
                                 {% endif %}
