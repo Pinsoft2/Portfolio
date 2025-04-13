@@ -6,7 +6,7 @@
     <title>Happy Valentines My One and Only</title>
     <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Audiowide&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet"  href="static/home.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
 <body>
     {% if not authenticated %}
