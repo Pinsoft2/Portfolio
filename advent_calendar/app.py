@@ -13,6 +13,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 Session(app)
 
+DATABASE_URL = os.environ.get('DATABASE_URL', 'project.db')
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -279,4 +281,5 @@ def close_db(error):
         g.db.close()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
