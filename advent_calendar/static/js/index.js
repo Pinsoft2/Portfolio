@@ -5,6 +5,16 @@ let timeLeft = 10;
 let countdownInterval;
 let isMouseDown = false;
 
+// Function to get the base path - works in both environments
+function getBasePath() {
+    // Get the current path and check if it includes 'advent_calendar'
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('/advent_calendar')) {
+        return '/advent_calendar';
+    }
+    return '';
+}
+
 viewer.addEventListener('load', () => {
     console.log('Spline scene loaded');
     instructionElement.style.display = 'block';
@@ -31,7 +41,8 @@ function startCountdown() {
 
         if (timeLeft < 0) {
             clearInterval(countdownInterval);
-            window.location.href = '/home';
+            // Use the base path function to determine the correct URL
+            window.location.href = getBasePath() + '/home';
         }
     }, 1000);
 }
