@@ -6,7 +6,7 @@ from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config["SESSION_PERMANENT"] = True
 app.config["PERMANENT_SESSION_LIFETIME"] = 7200
 app.config["SESSION_TYPE"] = "filesystem"
